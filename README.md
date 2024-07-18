@@ -13,6 +13,30 @@ The VM also should be Ubuntu 22.04
 
 Here we will be having one node as master node and other 3 nodes as worker nodes.
 
+## Firewall Rule
+
+If you are using any cloud provider go to their Firewall Rule and create a firewall to allow IPIP protocol also. 
+
+Example for GCP firewall rule setup:
+
+Name: k8s-calico
+
+Network: Select default.
+
+Priority: Set the priority for this rule. Lower numbers indicate higher priority. (Defaults to 1000 if not specified.)
+
+Direction of traffic: Choose Ingress to allow incoming traffic.
+
+Action on match: Choose Allow.
+
+Targets: Choose All instances in the network 
+
+Source filter: Choose IP ranges.
+
+Source IP ranges: Enter 10.240.0.0/24 or 0.0.0.0/0
+
+Protocols and ports: Select Specified protocols and ports and enter tcp, udp, icmp, ipip.(Small)
+
 ## All the Nodes
 
 Setup the hosts for kubernetes configuration.
@@ -96,7 +120,3 @@ Now after all the pods are up check the nodes using this command:
 ```bash
 kubectl get nodes
  ```
-
-## Problems:
-
-1. Pod to Pod communication is not working. Any ideas please suggest and let me know.
